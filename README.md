@@ -4,7 +4,7 @@ Omniauth Strategy for plangrade. Find out more about the plangrade API at docs.p
 
 ## Installation
 
-Add this line to your application's Gemfile:
+Add omniauth-oauth2 and this line to your application's Gemfile:
 
     gem 'omniauth-plangrade', git: 'https://github.com/topherreynoso/omniauth-plangrade'
 
