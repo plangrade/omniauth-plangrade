@@ -1,7 +1,6 @@
-source 'https://rubygems.org'
+source "https://rubygems.org"
 
-# Specify your gem's dependencies in omniauth-plangrade.gemspec
+gem 'rake'
+
+# Specify your gem's dependencies in omniauth-twitter.gemspec
 gemspec
-
-gem 'oauth2'
-gem 'omniauth-oauth2'
