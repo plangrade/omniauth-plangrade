@@ -1,6 +1,7 @@
 # OmniAuth plangrade
 [![Gem Version](https://badge.fury.io/rb/omniauth-plangrade.svg)](http://badge.fury.io/rb/omniauth-plangrade)
 [![Code Climate](https://codeclimate.com/github/topherreynoso/omniauth-plangrade/badges/gpa.svg)](https://codeclimate.com/github/topherreynoso/omniauth-plangrade)
+[![Build Status](https://travis-ci.org/topherreynoso/omniauth-plangrade.svg?branch=master)](https://travis-ci.org/topherreynoso/omniauth-plangrade)
 
 plangrade OAuth2 strategy for OmniAuth.  
 Supports the OAuth 2.0 server-side and client-side flows. Read the plangrade docs for more details: [docs.plangrade.com](https://docs.plangrade.com/#authentication). Additionally, this may be used in conjunction with [plangrade-ruby](https://github.com/topherreynoso/plangrade-ruby) in order to refresh tokens and access plangrade API endpoints.
