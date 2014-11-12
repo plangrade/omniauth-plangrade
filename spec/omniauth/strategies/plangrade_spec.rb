@@ -1,24 +1,74 @@
 require 'spec_helper'
 
 describe OmniAuth::Strategies::Plangrade do
-  let(:request) { double('Request', :params => {}, :cookies => {}, :env => {}) }
+  subject { OmniAuth::Strategies::Plangrade.new(nil) }
 
-  subject do
-    args = ['appid', 'secret', @options || {}].compact
-    OmniAuth::Strategies::Plangrade.new(*args).tap do |strategy|
-      allow(strategy).to receive(:request) {
-        request
-      }
+  it 'should add a camelization for itself' do
+    expect(OmniAuth::Utils.camelize('plangrade')).to eq('Plangrade')
+  end
+
+  describe '#client' do
+    it 'has correct Plangrade site' do
+      expect(subject.client.site).to eq('https://plangrade.com')
+    end
+
+    it 'has correct authorize url' do
+      expect(subject.client.options[:authorize_url]).to eq('/oauth/authorize')
+    end
+
+    it 'has correct token url' do
+      expect(subject.client.options[:token_url]).to eq('/oauth/token')
     end
   end
 
-  describe 'client options' do
-    it 'should have correct name' do
-      expect(subject.options.name).to eq(:plangrade)
+  describe '#callback_path' do
+    it 'has the correct callback path' do
+      expect(subject.callback_path).to eq('/auth/plangrade/callback')
+    end
+  end
+
+  describe '#uid' do
+    before :each do
+      allow(subject).to receive(:raw_info) { { 'id' => 'uid' } }
     end
 
-    it 'should have correct site' do
-      expect(subject.options.client_options.site).to eq('https://plangrade.com')
+    it 'returns the id from raw_info' do
+      expect(subject.uid).to eq('uid')
+    end
+  end
+
+  describe '#info' do
+    context 'and therefore has all the necessary fields' do
+      before :each do
+        allow(subject).to receive(:raw_info) {
+          {
+            'name' => 'John Doe',
+            'email' => 'compliance@plangrade.com'
+          }
+        }
+      end
+
+      it { expect(subject.info).to have_key :name }
+      it { expect(subject.info).to have_key :email }
+    end
+
+    context 'and does not fail with empty response' do
+      before :each do
+        allow(subject).to receive(:raw_info) { {} }
+      end
+
+      it { expect { subject.info }.not_to raise_error }
+    end
+  end
+
+  describe '#raw_info' do
+    before :each do
+      response = double('response', :parsed => { 'foo' => 'bar' })
+      allow(subject).to receive(:access_token) { double('access token', :get => response) }
+    end
+
+    it 'returns parsed response from access token' do
+      expect(subject.raw_info).to eq({ 'foo' => 'bar' })
     end
   end
 end
