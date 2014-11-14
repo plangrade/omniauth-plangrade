@@ -10,7 +10,7 @@ module OmniAuth
         :authorize_url => "/oauth/authorize"
       }
 
-      uid { raw_info["id"] }
+      uid { raw_info["id"].to_i }
 
       info do
         {
