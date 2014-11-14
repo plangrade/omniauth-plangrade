@@ -10,23 +10,21 @@ module OmniAuth
         :authorize_url => "/oauth/authorize"
       }
 
-      uid { raw_info["id"].to_i }
+      uid { raw_info[:id] }
 
       info do
         {
-          :email => raw_info["email"],
-          :name => raw_info["name"]
+          :email => raw_info[:email],
+          :name => raw_info[:name]
         }
       end
 
       def raw_info
-        if @raw_info
-          return @raw_info
-        else
+        unless @raw_info
           result = access_token.get('/api/v1/me')
-          @raw_info = JSON.parse(result.body)
-          return @raw_info
+          @raw_info = result.body
         end
+        return @raw_info
       end
     end
   end
