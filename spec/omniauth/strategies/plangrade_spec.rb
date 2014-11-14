@@ -60,15 +60,4 @@ describe OmniAuth::Strategies::Plangrade do
       it { expect { subject.info }.not_to raise_error }
     end
   end
-
-  describe '#raw_info' do
-    before :each do
-      response = double('response', :parsed => { 'foo' => 'bar' })
-      allow(subject).to receive(:access_token) { double('access token', :get => response) }
-    end
-
-    it 'returns parsed response from access token' do
-      expect(subject.raw_info).to eq({ 'foo' => 'bar' })
-    end
-  end
 end
