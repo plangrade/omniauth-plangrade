@@ -29,7 +29,7 @@ describe OmniAuth::Strategies::Plangrade do
 
   describe '#uid' do
     before :each do
-      allow(subject).to receive(:raw_info) { { :id => 'uid' } }
+      allow(subject).to receive(:raw_info) { { "id" => 'uid' } }
     end
 
     it 'returns the id from raw_info' do
