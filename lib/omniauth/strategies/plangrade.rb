@@ -20,7 +20,8 @@ module OmniAuth
       end
 
       def raw_info
-        @raw_info ||= access_token.get('/api/v1/me.json').parsed
+        response = access_token.get('/api/v1/me')
+        @raw_info ||= JSON.parse(response.body)
       end
     end
   end
